@@ -1,7 +1,32 @@
 {% if messages %}
-  <div class="mb-5 flex flex-col gap-2" role="status">
+  <div class="fixed top-4 left-1/2 -translate-x-1/2 z-[100] w-full max-w-[32rem] px-4 pointer-events-none flex flex-col gap-2" id="toast-container">
     {% for mensagem in messages %}
-      <div class="alerta alerta-{{ mensagem.tags }}">{{ mensagem }}</div>
+      <div class="alerta alerta-{{ mensagem.tags }} pointer-events-auto flex items-center justify-between shadow-hard transition-all duration-300 transform translate-y-0 opacity-100" 
+           role="{% if mensagem.tags == 'danger' %}alert{% else %}status{% endif %}" aria-live="polite">
+        <span>{{ mensagem }}</span>
+        <button type="button" class="btn-icone p-1 ml-2 shrink-0 opacity-70 hover:opacity-100" onclick="this.closest('.alerta').remove()" aria-label="Fechar aviso">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
     {% endfor %}
   </div>
+  <script>
+    document.querySelectorAll('#toast-container .alerta').forEach(toast => {
+      let isHovered = false;
+      toast.addEventListener('mouseenter', () => isHovered = true);
+      toast.addEventListener('mouseleave', () => isHovered = false);
+      const delay = toast.classList.contains('alerta-danger') ? 6000 : 4000;
+      let timeLeft = delay;
+      const step = 100;
+      const interval = setInterval(() => {
+        if (!isHovered) timeLeft -= step;
+        if (timeLeft <= 0) {
+          clearInterval(interval);
+          toast.style.opacity = '0';
+          toast.style.transform = 'translateY(-1rem)';
+          setTimeout(() => toast.remove(), 300);
+        }
+      }, step);
+    });
+  </script>
 {% endif %}

@@ -1,26 +1,13 @@
 {% extends "layouts/base.html" %}
 {% load static quiz_extras %}
 {% block titulo %}Pergunta {{ partida.nivel_atual }} · Show do Tonhão{% endblock %}
-{# Tela de pergunta tem barra própria e ocupa a altura toda: sem navegação nem rodapé globais. #}
-{% block navegacao %}{% endblock %}
-{% block rodape %}{% endblock %}
-
 {% block conteudo %}
-<form method="post" action="{% url 'quiz:responder' %}" id="form-resposta" class="cz-tela">
+<form method="post" action="{% url 'quiz:responder' %}" id="form-resposta" class="cz-tela flex-1 h-full">
   {% csrf_token %}
   {# Botão padrão (Enter): garante que Enter confirme a resposta e não outra ação. #}
   <button type="submit" class="sr-only" tabindex="-1" aria-hidden="true">Confirmar</button>
 
-  <header class="flex flex-col gap-5 md:flex-row md:flex-wrap md:items-center md:justify-between mb-2">
-    <div class="flex items-center justify-between w-full md:w-auto">
-      <a class="cz-logo" href="{% url 'quiz:inicio' %}">
-        <span class="cz-logo-icone" aria-hidden="true">{% include "components/icone.html" with nome="trophy" classe="size-5" %}</span>Show do Tonhão
-      </a>
-      <div class="md:hidden">
-        {% include "components/aparencia.html" %}
-      </div>
-    </div>
-
+  <header class="flex flex-col gap-3 md:flex-row md:flex-wrap md:items-center md:justify-between mb-2">
     <ol class="cz-progresso w-full md:w-auto md:flex-1 order-last md:order-none" aria-label="Progresso: pergunta {{ partida.nivel_atual }} de {{ total_niveis }}">
       {% for degrau in escada reversed %}
         <li class="cz-ponto cz-ponto-{{ degrau.estado }}"{% if degrau.estado == 'atual' %} aria-current="step"{% endif %}><span class="sr-only">{{ degrau.nivel }}</span></li>
@@ -34,9 +21,6 @@
       </div>
       <button type="submit" class="cz-pilula cz-pilula-botao w-full sm:w-auto justify-center" formaction="{% url 'quiz:abandonar' %}" formnovalidate
               data-confirmar="Abandonar a partida? Você não leva nenhum prêmio.">Abandonar</button>
-      <div class="hidden md:block">
-        {% include "components/aparencia.html" %}
-      </div>
     </div>
   </header>
 

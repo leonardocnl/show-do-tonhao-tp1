@@ -60,7 +60,7 @@ Faça commit do `static/css/tailwind.css` gerado.
 - Tabela de prêmios de R$ 1.000 a R$ 1.000.000, com paradas garantidas nos níveis 5, 10 e 15
 - Em cada pergunta: acertar, parar (leva o valor de parar) ou errar (cai para o valor de errar)
 - Ajudas: **cartas** (eliminam 1 a 3 erradas), **placas** (opinião da plateia), **Tonhão** (dica) e **pular** (até 3 vezes)
-- Ranking (top 10) e histórico de partidas do jogador
+- Ranking (top 8) e histórico de partidas do jogador
 - CRUD de perguntas com 4 alternativas e 1 correta, com filtros e paginação
 - Janela de confirmação customizada para ações destrutivas ou de abandono
 - Interface responsiva com layout adaptado para celulares e tablets (sem rolagem horizontal em tabelas e telas principais)

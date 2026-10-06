@@ -16,7 +16,7 @@ ALLOWED_HOSTS = [
 ]
 
 INSTALLED_APPS = [
-#@    "jazzmin",  # precisa vir antes de django.contrib.admin
+    "jazzmin",  # precisa vir antes de django.contrib.admin
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",

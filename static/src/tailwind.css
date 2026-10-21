@@ -395,7 +395,7 @@
     @apply w-full text-left min-w-[600px];
   }
   .tabela th {
-    @apply border-b-4 border-line px-4 py-3 text-sm font-black tracking-widest text-muted uppercase whitespace-nowrap;
+    @apply sticky top-0 bg-paper z-10 border-b-4 border-line px-4 py-3 text-sm font-black tracking-widest text-muted uppercase whitespace-nowrap;
   }
   .tabela td {
     @apply border-b-2 border-line px-4 py-3 align-middle;
@@ -428,7 +428,7 @@
   .alerta-danger { background: #c4161f; color: #fff; }
 
   /* ---- Estrutura: centralizada na tela, barra no topo, pergunta + prêmios ---- */
-  .cz-tela { display: flex; flex-direction: column; justify-content: center; gap: 1.75rem; max-width: 1180px; margin-inline: auto; min-height: calc(100vh - 3rem); }
+  .cz-tela { display: flex; flex-direction: column; justify-content: center; gap: clamp(1rem, 2vh, 1.75rem); max-width: 1180px; margin-inline: auto; height: 100%; }
 
   /* Barra superior */
   .cz-topo { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.25rem; }
@@ -447,23 +447,23 @@
   .cz-pilula-botao:hover { transform: translateY(-1px); }
 
   /* Corpo */
-  .cz-corpo { display: grid; gap: 2rem; grid-template-columns: minmax(0, 1fr); }
+  .cz-corpo { display: grid; gap: 2rem; grid-template-columns: minmax(0, 1fr); flex: 1; min-height: 0; }
   @media (min-width: 64rem) { .cz-corpo { grid-template-columns: minmax(0, 1fr) 22rem; } }
-  .cz-coluna { display: flex; flex-direction: column; gap: 1.5rem; min-width: 0; }
+  .cz-coluna { display: flex; flex-direction: column; gap: clamp(1rem, 2vh, 1.5rem); min-width: 0; height: 100%; }
 
-  .cz-pergunta { border: 4px solid var(--t-line); border-radius: 1.875rem; background: var(--t-paper); box-shadow: 0 8px 0 var(--t-shadow); padding: 1.75rem clamp(1.25rem, 3vw, 2.25rem); }
-  .cz-pergunta h1 { margin: 0; font-size: clamp(1.4rem, 2.6vw, 1.9rem); line-height: 1.3; font-weight: 800; text-wrap: balance; }
-  .cz-etiqueta { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem; margin-bottom: 0.9rem; font-size: 0.8rem; font-weight: 900; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cz-orange); }
-  .cz-centro { justify-content: center; margin-bottom: 0.9rem; }
+  .cz-pergunta { border: 4px solid var(--t-line); border-radius: 1.875rem; background: var(--t-paper); box-shadow: 0 8px 0 var(--t-shadow); padding: clamp(1rem, 2vh, 1.75rem) clamp(1.25rem, 3vw, 2.25rem); }
+  .cz-pergunta h1 { margin: 0; font-size: clamp(1.4rem, 2.6vh, 1.9rem); line-height: 1.3; font-weight: 800; text-wrap: balance; }
+  .cz-etiqueta { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem; margin-bottom: clamp(0.5rem, 1vh, 0.9rem); font-size: 0.8rem; font-weight: 900; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cz-orange); }
+  .cz-centro { justify-content: center; margin-bottom: clamp(0.5rem, 1vh, 0.9rem); }
   .cz-selo { border-radius: 9999px; background: var(--cz-sun); color: var(--cz-navy); padding: 0.15rem 0.8rem; letter-spacing: 0.02em; text-transform: none; }
 
-  .cz-dica { display: flex; align-items: center; gap: 1rem; border: 4px solid var(--t-line); border-radius: 1.5rem; background: var(--t-paper); box-shadow: 0 5px 0 var(--t-shadow); padding: 0.9rem 1.25rem; font-weight: 800; }
+  .cz-dica { display: flex; align-items: center; gap: 1rem; border: 4px solid var(--t-line); border-radius: 1.5rem; background: var(--t-paper); box-shadow: 0 5px 0 var(--t-shadow); padding: clamp(0.6rem, 1.2vh, 0.9rem) 1.25rem; font-weight: 800; }
   .cz-dica-icone { display: grid; flex: none; place-items: center; width: 2.5rem; height: 2.5rem; border-radius: 9999px; background: var(--cz-sun); color: var(--cz-navy); font-weight: 900; }
 
   /* Alternativas (input radio escondido + label, ver jogo.html) */
-  .cz-alternativas { display: grid; gap: 1.25rem; grid-template-columns: minmax(0, 1fr); }
+  .cz-alternativas { display: grid; gap: clamp(0.8rem, 1.5vh, 1.25rem); grid-template-columns: minmax(0, 1fr); }
   @media (min-width: 40rem) { .cz-alternativas { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-  .cz-alt { display: flex; align-items: center; gap: 1.1rem; min-height: 5.5rem; border: 4px solid var(--t-line); border-radius: 1.625rem; background: var(--t-paper); color: var(--t-ink); padding: 0.75rem 1.5rem 0.75rem 1.1rem; font-size: 1.2rem; font-weight: 800; box-shadow: 0 7px 0 var(--t-shadow); cursor: pointer; transition: transform 0.12s, box-shadow 0.12s; }
+  .cz-alt { display: flex; align-items: center; gap: 1.1rem; min-height: clamp(4rem, 8vh, 5.5rem); border: 4px solid var(--t-line); border-radius: 1.625rem; background: var(--t-paper); color: var(--t-ink); padding: clamp(0.5rem, 1vh, 0.75rem) 1.5rem clamp(0.5rem, 1vh, 0.75rem) 1.1rem; font-size: 1.2rem; font-weight: 800; box-shadow: 0 7px 0 var(--t-shadow); cursor: pointer; transition: transform 0.12s, box-shadow 0.12s; }
   .cz-alt:hover { transform: translateY(-2px); box-shadow: 0 9px 0 var(--t-shadow); }
   .cz-letra { display: grid; flex: none; place-items: center; width: 2.9rem; height: 2.9rem; border-radius: 9999px; background: var(--t-primary); color: var(--t-primary-fg); font-size: 1.3rem; font-weight: 900; }
   .cz-pct { margin-left: auto; border-radius: 9999px; background: var(--cz-sun); color: var(--cz-navy); padding: 0.1rem 0.7rem; font-size: 0.95rem; font-weight: 900; }
@@ -491,13 +491,13 @@
   /* Prêmios: ocupa a altura da coluna, degraus distribuídos */
   .cz-premios { display: flex; flex-direction: column; align-self: stretch; border: 4px solid var(--t-line); border-radius: 1.875rem; background: var(--t-paper); box-shadow: 0 8px 0 var(--t-shadow); padding: 1.4rem 1rem; }
   .cz-premios ol { display: flex; flex: 1; flex-direction: column; justify-content: space-between; gap: 0.25rem; }
-  .cz-degrau { display: flex; align-items: center; gap: 0.6rem; border-radius: 0.9rem; padding: 0.4rem 1rem; font-size: 1.05rem; font-weight: 800; color: var(--t-muted); }
+  .cz-degrau { display: flex; align-items: center; gap: 0.6rem; border-radius: 0.9rem; padding: clamp(0.2rem, 0.5vh, 0.4rem) 1rem; font-size: 1.05rem; font-weight: 800; color: var(--t-muted); }
   .cz-degrau-n { width: 1.7rem; }
   .cz-degrau-marca { width: 1.2rem; color: var(--cz-ok); }
   .cz-degrau-valor { margin-left: auto; }
   .cz-degrau-parada { color: var(--t-ink); }
   .cz-degrau-parada .cz-degrau-marca { color: var(--cz-orange); }
-  .cz-degrau-atual { background: var(--cz-sun); color: var(--cz-navy); box-shadow: 0 3px 0 var(--t-shadow); padding-block: 0.55rem; font-size: 1.15rem; }
+  .cz-degrau-atual { background: var(--cz-sun); color: var(--cz-navy); box-shadow: 0 3px 0 var(--t-shadow); padding-block: clamp(0.3rem, 0.8vh, 0.55rem); font-size: 1.15rem; }
   .cz-degrau-atual .cz-degrau-marca { color: var(--cz-navy); }
 
   /* ---- Menu "Aparência": modo, tema e fonte (static/js/aparencia.js) ---- */

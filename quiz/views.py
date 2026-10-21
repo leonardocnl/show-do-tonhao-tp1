@@ -156,7 +156,7 @@ def resultado(request, pk):
         else:
             partidas_ranking = partidas_ranking.filter(categoria_id=partida.categoria_id)
         
-        top_10 = list(partidas_ranking.order_by("-premio_final", "tempo_total")[:10])
+        top_10 = list(partidas_ranking.order_by("-premio_final", "tempo_total")[:8])
         for i, p in enumerate(top_10, start=1):
             if p.pk == partida.pk:
                 posicao_ranking = i
@@ -199,7 +199,7 @@ def ranking(request):
         partidas = partidas.filter(categoria__slug=tema)
 
     contexto = {
-        "partidas": partidas.order_by("-premio_final", "tempo_total")[:10],
+        "partidas": partidas.order_by("-premio_final", "tempo_total")[:8],
         "categorias": categorias,
         "tema": tema,
     }
@@ -209,7 +209,7 @@ def ranking(request):
 @login_required
 def historico(request):
     partidas = Partida.objects.filter(jogador=request.user).select_related("categoria")
-    pagina = Paginator(partidas, 10).get_page(request.GET.get("page"))
+    pagina = Paginator(partidas, 8).get_page(request.GET.get("page"))
     return render(request, "quiz/historico.html", {"pagina": pagina})
 
 
@@ -230,7 +230,7 @@ class PerguntaListView(PermissaoMixin, ListView):
     model = Pergunta
     template_name = "quiz/pergunta_list.html"
     context_object_name = "perguntas"
-    paginate_by = 12
+    paginate_by = 8
 
     def get_queryset(self):
         consulta = Pergunta.objects.select_related("categoria").order_by("-atualizada_em")

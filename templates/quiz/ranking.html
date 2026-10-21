@@ -17,9 +17,8 @@
 </div>
 
 {% if partidas %}
-<section class="card p-2 md:p-4">
-  <div class="overflow-x-auto">
-    <div class="tabela-wrapper"><table class="tabela">
+<section class="card p-0 md:p-0 flex flex-col flex-1 min-h-0 overflow-hidden">
+  <div class="tabela-wrapper flex-1 overflow-auto"><table class="tabela">
       <thead>
         <tr>
           <th class="text-center">Posição</th>
@@ -43,7 +42,6 @@
         {% endfor %}
       </tbody>
     </table></div>
-  </div>
 </section>
 {% else %}
 <section class="card p-6 text-center">

@@ -2,8 +2,7 @@
 {% block titulo %}Excluir pergunta · Show do Tonhão{% endblock %}
 
 {% block conteudo %}
-<div class="flex min-h-[calc(100vh-10rem)] items-center justify-center p-4">
-  <div class="card w-full max-w-xl text-center">
+  <div class="card w-full max-w-xl text-center m-auto">
     <form method="post">
       {% csrf_token %}
       <h1 class="mb-4 text-3xl">Excluir pergunta?</h1>
@@ -17,5 +16,4 @@
       </div>
     </form>
   </div>
-</div>
 {% endblock %}

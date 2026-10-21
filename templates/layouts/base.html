@@ -24,25 +24,16 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600..900&family=Fredoka:wght@500..700&family=Baloo+2:wght@500..800&family=Lexend:wght@500..900&family=Figtree:wght@500..900&family=Plus+Jakarta+Sans:wght@500..800&family=Atkinson+Hyperlegible:wght@400;700&family=DM+Sans:wght@500..900&display=swap" rel="stylesheet">
-  <link href="{% static 'css/tailwind.css' %}" rel="stylesheet">
+  <link href="{% static 'css/tailwind.css' %}?v=2" rel="stylesheet">
   {% block extra_head %}{% endblock %}
 </head>
-<body class="tema-cozy">
+<body class="tema-cozy flex flex-col h-[100dvh] overflow-hidden">
   {% block navegacao %}{% include "layouts/navegacao.html" %}{% endblock %}
 
-  <main class="mx-auto w-full max-w-[1400px] flex-1 px-4 py-6 sm:px-6">
+  <main class="mx-auto w-full max-w-[1400px] flex-1 min-h-0 overflow-auto overscroll-contain px-4 py-6 sm:px-6 relative flex flex-col">
     {% include "components/mensagens.html" %}
     {% block conteudo %}{% endblock %}
   </main>
-
-  {% block rodape %}
-  <footer class="mt-6 border-t-3 border-line bg-paper py-4 font-bold text-muted">
-    <div class="mx-auto flex w-full max-w-[1400px] flex-wrap justify-between gap-2 px-4 text-sm sm:px-6">
-      <span>Show do Tonhão · Programação Web (GAC116)</span>
-      <span>16 níveis · de R$ 1.000 a R$ 1.000.000</span>
-    </div>
-  </footer>
-  {% endblock %}
 
   <script src="{% static 'js/aparencia.js' %}"></script>
   <script src="{% static 'js/navegacao.js' %}"></script>

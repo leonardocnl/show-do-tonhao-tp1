@@ -1,0 +1,20 @@
+{% extends "layouts/base.html" %}
+{% block titulo %}{% if object %}Editar categoria{% else %}Nova categoria{% endif %} · Show do Tonhão{% endblock %}
+
+{% block conteudo %}
+<div class="mx-auto max-w-3xl">
+  <h1 class="mb-6 text-4xl">{% if object %}Editar categoria{% else %}Nova categoria{% endif %}</h1>
+
+  <form method="post" class="card" novalidate>
+    {% csrf_token %}
+    {% if form.non_field_errors %}<div class="alerta alerta-danger mb-4">{{ form.non_field_errors }}</div>{% endif %}
+
+    {% for campo in form %}{% include "components/campo.html" with campo=campo %}{% endfor %}
+
+    <div class="mt-8 flex flex-col-reverse gap-4 sm:flex-row sm:justify-end">
+      <a class="btn btn-lg w-full sm:w-auto" href="{% url 'quiz:categorias' %}">Cancelar</a>
+      <button type="submit" class="btn btn-primary btn-lg w-full sm:w-auto">Salvar</button>
+    </div>
+  </form>
+</div>
+{% endblock %}

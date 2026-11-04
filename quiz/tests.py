@@ -301,3 +301,58 @@ class PerfisEPermissoesTests(JogoBase):
         self.assertEqual(Pergunta.objects.count(), total)
         self.assertEqual(Alternativa.objects.count(), total * 4)
         self.assertEqual(Rodada.objects.count(), 0)
+
+
+class CategoriaCrudTests(JogoBase):
+    def setUp(self):
+        super().setUp()
+        self.editor = Usuario.objects.create_user("editor", password="senha-forte-9876")
+        self.editor.groups.add(*self.jogador.groups.model.objects.filter(name=EDITORES))
+
+    def test_jogador_nao_acessa_as_categorias(self):
+        resposta = self.client.get(reverse("quiz:categorias"))
+        self.assertEqual(resposta.status_code, 403)
+
+    def test_anonimo_e_redirecionado_ao_login(self):
+        self.client.logout()
+        resposta = self.client.get(reverse("quiz:categorias"))
+        self.assertRedirects(
+            resposta, f"{reverse('contas:login')}?next={reverse('quiz:categorias')}", fetch_redirect_response=False
+        )
+
+    def test_editor_cria_edita_e_exclui_categoria(self):
+        self.client.force_login(self.editor)
+        dados = {"nome": "Esportes", "slug": "esportes", "descricao": "Futebol e afins", "ordem": 9, "ativa": "on"}
+        resposta = self.client.post(reverse("quiz:categoria_nova"), dados)
+        self.assertRedirects(resposta, reverse("quiz:categorias"))
+        categoria = Categoria.objects.get(slug="esportes")
+
+        dados.update(nome="Esportes radicais")
+        del dados["ativa"]
+        resposta = self.client.post(reverse("quiz:categoria_editar", args=[categoria.pk]), dados)
+        self.assertRedirects(resposta, reverse("quiz:categorias"))
+        categoria.refresh_from_db()
+        self.assertEqual(categoria.nome, "Esportes radicais")
+        self.assertFalse(categoria.ativa)
+
+        resposta = self.client.post(reverse("quiz:categoria_excluir", args=[categoria.pk]))
+        self.assertRedirects(resposta, reverse("quiz:categorias"))
+        self.assertFalse(Categoria.objects.filter(pk=categoria.pk).exists())
+
+    def test_categoria_com_perguntas_nao_e_excluida(self):
+        self.client.force_login(self.editor)
+        categoria = Categoria.objects.filter(perguntas__isnull=False).first()
+        total = categoria.perguntas.count()
+        resposta = self.client.post(reverse("quiz:categoria_excluir", args=[categoria.pk]), follow=True)
+        self.assertRedirects(resposta, reverse("quiz:categorias"))
+        self.assertContains(resposta, "Esta categoria tem perguntas e não pode ser excluída. Desative-a.")
+        self.assertEqual(Categoria.objects.get(pk=categoria.pk).perguntas.count(), total)
+
+    def test_busca_filtra_a_lista_de_categorias(self):
+        self.client.force_login(self.editor)
+        alvo = Categoria.objects.get(slug="ciencias")
+        resposta = self.client.get(reverse("quiz:categorias"), {"q": alvo.nome[:5]})
+        nomes = [c.nome for c in resposta.context["categorias"]]
+        self.assertIn(alvo.nome, nomes)
+        self.assertTrue(all(alvo.nome[:5].lower() in nome.lower() for nome in nomes))
+        self.assertLess(len(nomes), Categoria.objects.count())

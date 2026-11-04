@@ -1,7 +1,7 @@
 {% with rota=request.resolver_match.url_name %}
 <header class="border-b-4 border-line bg-paper">
   <nav class="mx-auto flex w-full max-w-[1400px] flex-wrap items-center gap-x-4 gap-y-3 px-4 py-3 sm:px-6" aria-label="Principal">
-    <a class="sticker text-2xl" href="{% url 'quiz:inicio' %}">tonhão</a>
+    <a class="logo-tonhao" href="{% url 'quiz:inicio' %}" aria-label="Show do Tonhão, página inicial"></a>
 
     <button type="button" id="btn-menu" class="btn-tema ml-auto lg:hidden" aria-controls="menu" aria-expanded="false">
       {% include "components/icone.html" with nome="menu" %}<span class="sr-only">Abrir menu</span>

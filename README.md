@@ -6,7 +6,7 @@ Jogo de perguntas e respostas no formato "Show do Milhão", feito em Django para
 
 | Nome | Matrícula | GitHub |
 | --- | --- | --- |
-| Leonardo Carvalho Silva | _preencher_ | [leonardocnl](https://github.com/leonardocnl) |
+| Leonardo Carvalho Silva | 202410427 | [leonardocnl](https://github.com/leonardocnl) |
 | Gustavo Figueiredo de Oliveira | _preencher_ | [0GustavoFigueiredo](https://github.com/0GustavoFigueiredo) |
 
 ## Tecnologias

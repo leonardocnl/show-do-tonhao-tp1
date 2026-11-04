@@ -4,7 +4,7 @@ from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator
 from django.db import transaction
-from django.db.models import DurationField, ExpressionWrapper, F, ProtectedError
+from django.db.models import Count, DurationField, ExpressionWrapper, F, ProtectedError
 from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
@@ -12,7 +12,7 @@ from django.views.decorators.http import require_POST
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
 from . import regras, services
-from .forms import AlternativaFormSet, FiltroPerguntasForm, PerguntaForm
+from .forms import AlternativaFormSet, CategoriaForm, FiltroPerguntasForm, PerguntaForm
 from .models import Categoria, Partida, Pergunta
 
 
@@ -214,7 +214,7 @@ def historico(request):
 
 
 # ---------------------------------------------------------------------------
-# Área do editor: CRUD de perguntas (exige permissões do grupo Editores)
+# Área do editor: CRUD de perguntas e categorias (exige permissões do grupo Editores)
 # ---------------------------------------------------------------------------
 class PermissaoMixin(PermissionRequiredMixin):
     """Anônimo vai para o login; logado sem permissão recebe 403."""
@@ -313,4 +313,65 @@ class PerguntaDeleteView(PermissaoMixin, DeleteView):
             )
             return redirect(self.success_url)
         messages.success(self.request, "Pergunta excluída.")
+        return resposta
+
+
+class CategoriaListView(PermissaoMixin, ListView):
+    permission_required = "quiz.view_categoria"
+    model = Categoria
+    template_name = "quiz/categoria_list.html"
+    context_object_name = "categorias"
+    paginate_by = 8
+
+    def get_queryset(self):
+        consulta = Categoria.objects.annotate(total_perguntas=Count("perguntas")).order_by("ordem", "nome")
+        self.busca = self.request.GET.get("q", "").strip()
+        if self.busca:
+            consulta = consulta.filter(nome__icontains=self.busca)
+        return consulta
+
+    def get_context_data(self, **kwargs):
+        contexto = super().get_context_data(**kwargs)
+        parametros = self.request.GET.copy()
+        parametros.pop("page", None)
+        contexto["busca"] = self.busca
+        contexto["qs"] = parametros.urlencode()
+        return contexto
+
+
+class CategoriaFormMixin(PermissaoMixin):
+    model = Categoria
+    form_class = CategoriaForm
+    template_name = "quiz/categoria_form.html"
+    success_url = reverse_lazy("quiz:categorias")
+
+    def form_valid(self, form):
+        messages.success(self.request, "Categoria salva.")
+        return super().form_valid(form)
+
+
+class CategoriaCreateView(CategoriaFormMixin, CreateView):
+    permission_required = "quiz.add_categoria"
+
+
+class CategoriaUpdateView(CategoriaFormMixin, UpdateView):
+    permission_required = "quiz.change_categoria"
+
+
+class CategoriaDeleteView(PermissaoMixin, DeleteView):
+    permission_required = "quiz.delete_categoria"
+    model = Categoria
+    template_name = "quiz/categoria_confirm_delete.html"
+    success_url = reverse_lazy("quiz:categorias")
+
+    def form_valid(self, form):
+        try:
+            resposta = super().form_valid(form)
+        except ProtectedError:
+            messages.error(
+                self.request,
+                "Esta categoria tem perguntas e não pode ser excluída. Desative-a.",
+            )
+            return redirect(self.success_url)
+        messages.success(self.request, "Categoria excluída.")
         return resposta

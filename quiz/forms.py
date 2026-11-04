@@ -6,6 +6,12 @@ from contas.forms import EstiloTailwindMixin
 from .models import Alternativa, Categoria, Pergunta
 
 
+class CategoriaForm(EstiloTailwindMixin, forms.ModelForm):
+    class Meta:
+        model = Categoria
+        fields = ["nome", "slug", "descricao", "ordem", "ativa"]
+
+
 class PerguntaForm(EstiloTailwindMixin, forms.ModelForm):
     class Meta:
         model = Pergunta

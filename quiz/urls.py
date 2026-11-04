@@ -20,4 +20,8 @@ urlpatterns = [
     path("editor/perguntas/nova/", views.PerguntaCreateView.as_view(), name="pergunta_nova"),
     path("editor/perguntas/<int:pk>/editar/", views.PerguntaUpdateView.as_view(), name="pergunta_editar"),
     path("editor/perguntas/<int:pk>/excluir/", views.PerguntaDeleteView.as_view(), name="pergunta_excluir"),
+    path("editor/categorias/", views.CategoriaListView.as_view(), name="categorias"),
+    path("editor/categorias/nova/", views.CategoriaCreateView.as_view(), name="categoria_nova"),
+    path("editor/categorias/<int:pk>/editar/", views.CategoriaUpdateView.as_view(), name="categoria_editar"),
+    path("editor/categorias/<int:pk>/excluir/", views.CategoriaDeleteView.as_view(), name="categoria_excluir"),
 ]

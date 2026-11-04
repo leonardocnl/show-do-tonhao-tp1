@@ -17,6 +17,9 @@
         {% if perms.quiz.view_pergunta %}
           <li><a class="nav-link block" href="{% url 'quiz:perguntas' %}"{% if 'pergunta' in rota %} aria-current="page"{% endif %}>Perguntas</a></li>
         {% endif %}
+        {% if perms.quiz.view_categoria %}
+          <li><a class="nav-link block" href="{% url 'quiz:categorias' %}"{% if 'categoria' in rota %} aria-current="page"{% endif %}>Categorias</a></li>
+        {% endif %}
         {% if user.is_staff %}
           <li><a class="nav-link block" href="{% url 'admin:index' %}">Painel</a></li>
         {% endif %}

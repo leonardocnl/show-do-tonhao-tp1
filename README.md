@@ -7,7 +7,7 @@ Jogo de perguntas e respostas no formato "Show do Milhão", feito em Django para
 | Nome | Matrícula | GitHub |
 | --- | --- | --- |
 | Leonardo Carvalho Silva | 202410427 | [leonardocnl](https://github.com/leonardocnl) |
-| Gustavo Figueiredo de Oliveira | _preencher_ | [0GustavoFigueiredo](https://github.com/0GustavoFigueiredo) |
+| Gustavo Figueiredo de Oliveira | 202410429 | [0GustavoFigueiredo](https://github.com/0GustavoFigueiredo) |
 
 ## Tecnologias
 
@@ -61,6 +61,7 @@ Faça commit do `static/css/tailwind.css` gerado.
 - Ajudas: **cartas** (eliminam 1 a 3 erradas), **placas** (opinião da plateia), **Tonhão** (dica) e **pular** (até 3 vezes)
 - Ranking (top 8) e histórico de partidas do jogador
 - CRUD de perguntas com 4 alternativas e 1 correta, com filtros e paginação
+- CRUD de categorias na área do editor
 - Janela de confirmação customizada para ações destrutivas ou de abandono
 - Interface responsiva com layout adaptado para celulares e tablets (sem rolagem horizontal em tabelas e telas principais)
 - Painel administrativo com filtros (`list_filter`) e busca
@@ -85,7 +86,8 @@ Faça commit do `static/css/tailwind.css` gerado.
 | Jogar, ver ranking e histórico | ✖ | ✔ | ✔ | ✔ |
 | Listar perguntas | ✖ | ✖ | ✔ | ✔ |
 | Criar, editar e excluir perguntas | ✖ | ✖ | ✔ | ✔ |
-| Acessar `/painel/` e gerenciar categorias e usuários | ✖ | ✖ | ✖ | ✔ |
+| Criar, editar e excluir categorias | ✖ | ✖ | ✔ | ✔ |
+| Acessar `/painel/` e gerenciar usuários | ✖ | ✖ | ✖ | ✔ |
 
 Os grupos **Jogadores** e **Editores** são criados automaticamente após o `migrate`. Administradores são usuários `is_staff`/`is_superuser`. Visitantes são levados ao login; usuários logados sem permissão veem uma página 403.
 

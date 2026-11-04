@@ -74,6 +74,45 @@
 [data-palette="framboesa"] { --t-bg:#f7c8d8;--t-dots:#f2b6ca;--t-paper:#fff9f6;--t-ink:#55193a;--t-muted:#8a3d62;--t-line:#55193a;--t-shadow:#8a3d62;--t-primary:#55193a;--t-primary-fg:#fff9f6;--t-soft:color-mix(in srgb,var(--t-bg),var(--t-ink) 10%);--t-step-past:var(--t-soft);--t-stop:var(--t-muted);--t-stop-fg:var(--t-bg);--cz-sun:#ffc94d;--cz-orange:#ff7aa8;--cz-ok:#1f8a5a;--cz-navy:#55193a; }
 .dark[data-palette="framboesa"] { --t-bg:#2b0f1e;--t-dots:#36152a;--t-paper:#4a1d34;--t-ink:#ffeaf2;--t-muted:#e8b4c8;--t-line:#14050c;--t-shadow:#14050c;--t-primary:#ffeaf2;--t-primary-fg:#2b0f1e;--t-soft:color-mix(in srgb,var(--t-bg),var(--t-ink) 10%);--t-step-past:var(--t-soft);--t-stop:var(--t-muted);--t-stop-fg:var(--t-bg); }
 
+/* ---------- Logo por tema e modo (arte em static/img/logos/) ----------
+   Cada tema tem uma versão para fundo claro e outra para fundo escuro. */
+:root {
+  --logo: url("../img/logos/cozy-claro.png");
+}
+.dark {
+  --logo: url("../img/logos/cozy-escuro.png");
+}
+[data-palette="ceu"] {
+  --logo: url("../img/logos/ceu-claro.png");
+}
+.dark[data-palette="ceu"] {
+  --logo: url("../img/logos/ceu-escuro.png");
+}
+[data-palette="lagoa"] {
+  --logo: url("../img/logos/lagoa-claro.png");
+}
+.dark[data-palette="lagoa"] {
+  --logo: url("../img/logos/lagoa-escuro.png");
+}
+[data-palette="crepusculo"] {
+  --logo: url("../img/logos/crepusculo-claro.png");
+}
+.dark[data-palette="crepusculo"] {
+  --logo: url("../img/logos/crepusculo-escuro.png");
+}
+[data-palette="grafite"] {
+  --logo: url("../img/logos/grafite-claro.png");
+}
+.dark[data-palette="grafite"] {
+  --logo: url("../img/logos/grafite-escuro.png");
+}
+[data-palette="framboesa"] {
+  --logo: url("../img/logos/framboesa-claro.png");
+}
+.dark[data-palette="framboesa"] {
+  --logo: url("../img/logos/framboesa-escuro.png");
+}
+
 @theme inline {
   --font-sans: var(--fonte);
 
@@ -165,9 +204,20 @@
     @apply px-4 py-3 sm:py-1 text-sm shadow-hard-sm min-h-[44px] sm:min-h-0 flex items-center justify-center;
   }
 
-  /* Logo / selo amarelo */
-  .sticker {
-    @apply inline-block -rotate-2 rounded-2xl border-4 border-line bg-sun px-4 py-0.5 font-black tracking-tight text-navy no-underline shadow-hard-sm;
+  /* Logo: a arte já traz o selo e a sombra; a cor muda com o tema e o modo. */
+  .logo-tonhao {
+    display: inline-block;
+    flex-shrink: 0;
+    width: 5.5rem;
+    aspect-ratio: 924 / 555;
+    background: var(--logo) center / contain no-repeat;
+    border-radius: 1rem;
+    text-decoration: none;
+  }
+  @media (width >= 40rem) {
+    .logo-tonhao {
+      width: 7rem;
+    }
   }
 
   /* Botão de tema */
@@ -432,8 +482,6 @@
 
   /* Barra superior */
   .cz-topo { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.25rem; }
-  .cz-logo { display: flex; align-items: center; gap: 0.6rem; font-size: 1.35rem; font-weight: 900; color: var(--t-ink); text-decoration: none; }
-  .cz-logo-icone { display: grid; place-items: center; width: 2.5rem; height: 2.5rem; border-radius: 9999px; border: 4px solid var(--t-line); background: var(--cz-sun); color: var(--cz-navy); box-shadow: 0 3px 0 var(--t-shadow); }
   .cz-progresso { display: flex; flex: 1 0 auto; flex-wrap: nowrap; justify-content: center; gap: 0.25rem; }
   .cz-ponto { width: 0.8rem; height: 0.8rem; border-radius: 9999px; border: 3px solid var(--t-line); background: var(--t-paper); }
   .cz-ponto-passado { background: var(--cz-ok); }
